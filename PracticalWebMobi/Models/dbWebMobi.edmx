@@ -1,0 +1,172 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="TestWebMobiModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="tblDepartment">
+          <Key>
+            <PropertyRef Name="departmentId" />
+          </Key>
+          <Property Name="departmentId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="demartmentName" Type="nvarchar" MaxLength="100" />
+          <Property Name="status" Type="bit" />
+          <Property Name="createdBy" Type="int" />
+          <Property Name="createdDate" Type="datetime" />
+          <Property Name="modifyBy" Type="int" />
+          <Property Name="modifyDate" Type="datetime" />
+        </EntityType>
+        <EntityType Name="tblEmployee">
+          <Key>
+            <PropertyRef Name="employeeId" />
+          </Key>
+          <Property Name="employeeId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="firstName" Type="nvarchar" MaxLength="300" Nullable="false" />
+          <Property Name="lastName" Type="nvarchar" MaxLength="300" Nullable="false" />
+          <Property Name="gender" Type="nvarchar" MaxLength="10" Nullable="false" />
+          <Property Name="dateOfBirth" Type="date" Nullable="false" />
+          <Property Name="profilephoto" Type="varbinary(max)" />
+          <Property Name="departmentId" Type="int" Nullable="false" />
+          <Property Name="status" Type="bit" />
+          <Property Name="createdBy" Type="int" />
+          <Property Name="createdDate" Type="datetime" />
+          <Property Name="modifyBy" Type="int" />
+          <Property Name="modifyDate" Type="datetime" />
+        </EntityType>
+        <Association Name="FK_tblEmployee_tblDepartment">
+          <End Role="tblDepartment" Type="Self.tblDepartment" Multiplicity="1" />
+          <End Role="tblEmployee" Type="Self.tblEmployee" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tblDepartment">
+              <PropertyRef Name="departmentId" />
+            </Principal>
+            <Dependent Role="tblEmployee">
+              <PropertyRef Name="departmentId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="TestWebMobiModelStoreContainer">
+          <EntitySet Name="tblDepartment" EntityType="Self.tblDepartment" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tblEmployee" EntityType="Self.tblEmployee" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_tblEmployee_tblDepartment" Association="Self.FK_tblEmployee_tblDepartment">
+            <End Role="tblDepartment" EntitySet="tblDepartment" />
+            <End Role="tblEmployee" EntitySet="tblEmployee" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="TestWebMobiModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="tblDepartment">
+          <Key>
+            <PropertyRef Name="departmentId" />
+          </Key>
+          <Property Name="departmentId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="demartmentName" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="status" Type="Boolean" />
+          <Property Name="createdBy" Type="Int32" />
+          <Property Name="createdDate" Type="DateTime" Precision="3" />
+          <Property Name="modifyBy" Type="Int32" />
+          <Property Name="modifyDate" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="tblEmployees" Relationship="Self.FK_tblEmployee_tblDepartment" FromRole="tblDepartment" ToRole="tblEmployee" />
+        </EntityType>
+        <EntityType Name="tblEmployee">
+          <Key>
+            <PropertyRef Name="employeeId" />
+          </Key>
+          <Property Name="employeeId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="firstName" Type="String" MaxLength="300" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="lastName" Type="String" MaxLength="300" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="gender" Type="String" MaxLength="10" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="dateOfBirth" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="profilephoto" Type="Binary" MaxLength="Max" FixedLength="false" />
+          <Property Name="departmentId" Type="Int32" Nullable="false" />
+          <Property Name="status" Type="Boolean" />
+          <Property Name="createdBy" Type="Int32" />
+          <Property Name="createdDate" Type="DateTime" Precision="3" />
+          <Property Name="modifyBy" Type="Int32" />
+          <Property Name="modifyDate" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="tblDepartment" Relationship="Self.FK_tblEmployee_tblDepartment" FromRole="tblEmployee" ToRole="tblDepartment" />
+        </EntityType>
+        <Association Name="FK_tblEmployee_tblDepartment">
+          <End Role="tblDepartment" Type="Self.tblDepartment" Multiplicity="1" />
+          <End Role="tblEmployee" Type="Self.tblEmployee" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tblDepartment">
+              <PropertyRef Name="departmentId" />
+            </Principal>
+            <Dependent Role="tblEmployee">
+              <PropertyRef Name="departmentId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="TestWebMobiEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="tblDepartments" EntityType="Self.tblDepartment" />
+          <EntitySet Name="tblEmployees" EntityType="Self.tblEmployee" />
+          <AssociationSet Name="FK_tblEmployee_tblDepartment" Association="Self.FK_tblEmployee_tblDepartment">
+            <End Role="tblDepartment" EntitySet="tblDepartments" />
+            <End Role="tblEmployee" EntitySet="tblEmployees" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="TestWebMobiModelStoreContainer" CdmEntityContainer="TestWebMobiEntities">
+          <EntitySetMapping Name="tblDepartments">
+            <EntityTypeMapping TypeName="TestWebMobiModel.tblDepartment">
+              <MappingFragment StoreEntitySet="tblDepartment">
+                <ScalarProperty Name="departmentId" ColumnName="departmentId" />
+                <ScalarProperty Name="demartmentName" ColumnName="demartmentName" />
+                <ScalarProperty Name="status" ColumnName="status" />
+                <ScalarProperty Name="createdBy" ColumnName="createdBy" />
+                <ScalarProperty Name="createdDate" ColumnName="createdDate" />
+                <ScalarProperty Name="modifyBy" ColumnName="modifyBy" />
+                <ScalarProperty Name="modifyDate" ColumnName="modifyDate" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tblEmployees">
+            <EntityTypeMapping TypeName="TestWebMobiModel.tblEmployee">
+              <MappingFragment StoreEntitySet="tblEmployee">
+                <ScalarProperty Name="employeeId" ColumnName="employeeId" />
+                <ScalarProperty Name="firstName" ColumnName="firstName" />
+                <ScalarProperty Name="lastName" ColumnName="lastName" />
+                <ScalarProperty Name="gender" ColumnName="gender" />
+                <ScalarProperty Name="dateOfBirth" ColumnName="dateOfBirth" />
+                <ScalarProperty Name="profilephoto" ColumnName="profilephoto" />
+                <ScalarProperty Name="departmentId" ColumnName="departmentId" />
+                <ScalarProperty Name="status" ColumnName="status" />
+                <ScalarProperty Name="createdBy" ColumnName="createdBy" />
+                <ScalarProperty Name="createdDate" ColumnName="createdDate" />
+                <ScalarProperty Name="modifyBy" ColumnName="modifyBy" />
+                <ScalarProperty Name="modifyDate" ColumnName="modifyDate" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>
